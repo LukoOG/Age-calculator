@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components{
+    .container{
+        @apply w-screen min-h-screen mx-auto p-2 relative bg-gray-100 items-center flex
+    }
+
+    .wrapper{
+        @apply w-[45%] h-[400px] top-[50%] bg-white rounded-md shadow-xl mx-auto p-7 rounded-br-[30%];
+    }
+
+    /**wrapper elements**/
+    .section-1{
+        @apply flex-1 flex justify-evenly mr-[84px] ml-[24px]
+    }
+
+    .section-1 input{
+        @apply h-[42px] w-[6rem] rounded-md text-[24px] p-2 border-gray-400 border focus:border
+        focus:border-purple-200 outline-none font-semibold
+    }
+
+    .section-2{
+        @apply my-8
+    }
+
+    .section-2 p{
+        @apply text-[3em]
+    }
+
+    .section-2 span{
+        @apply text-purple-500 font-light
+    }
+}
