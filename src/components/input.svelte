@@ -5,16 +5,44 @@
 
     export let number: Number;
     export let key: String;
+    export let error;
 
+    $: ({errorValue, errorKey, errorData} = error)
+    $: errorMessage = `invalid ${key}`
+
+    const regex = /^[0-9]*$/;
     const passVariable = (e) =>{
-        let allowed = ['1','2','3','4','5','6','7','8','9','0']
+        if(!regex.test(e.target.value)){
+            if(number){
+                e.target.value = number
+            }else{
+                e.target.value= ''
+            }
+        }
+        else{
+            number = e.target.value
+        }
         dispatch('date', {[key]:number}) //learn difference btw tis & spread operator: obj ={...obj, [key]:number}
     }
 
-    
+    const placeholder = (key: String) => {
+        switch(key){
+            case 'day':
+                return 'DD'
+            case 'month':
+                return  'MM'
+            case 'year':
+                return 'YYYY'
+        }
+    }    
 </script>
 
 <div>
-    <p class='font-light uppercase'>{key}</p>
-    <input type='text' bind:value={number} on:input|preventDefault={e=>passVariable(e)}>
+    <p class='text-sm font-light {errorValue ? 'error':''} uppercase'>{key}</p>
+    <input class='{errorValue?'error':''}' type='text' on:input|preventDefault={e=>passVariable(e)} placeholder={placeholder(key)}>
+    {#if errorValue && errorKey == 'empty' && errorData[key] == true}
+        <p class='font-light text-xs text-red-400 italic'>This field is required</p>
+    {:else if errorValue && errorKey== 'invalid' && errorData[key] == true}
+        <p class='font-light text-xs text-red-400 italic'>{errorMessage}</p>
+    {/if}
 </div>
