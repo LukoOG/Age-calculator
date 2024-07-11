@@ -1,0 +1,35 @@
+Thought process of the date counting algorithm
+we pass in the relative days i.e the number of days the person has been alive in the current year starting 
+from Jan 1
+//birthdate has occured
+case1(birthdate < currentdate):
+this is meant to return the value of the currentdate - birthdate
+we achieve this by subtracting the months starting from the the birthmonth till the month before the current month
+e.g from Jan 1 to July 11 we have 191 days. We subtract starting from Jan till June
+i.e 191-31 -28 -31 -30 -31 -30
+        jan-feb-mar-apr-may-june
+correctly giving us 10 days. The month increment subtracts 6 times giving 6 months in between
+
+ps: since 2024 is a leap year. Feb is 29 not 28 hencing removing an extra 1 from the total. We fix this by
+ofsetting that 1 at the final calculation i.e just check if feb == 29 and add it back
+
+case2(birthdate > currentdate):
+this time we start subtracting from the next month and not the current month(birthmonth)
+e.g Jan 31 to July 11 is 161 days
+161 -28 -31 -30 -31 -30
+    feb-mar-apr-may-jun
+correctly giving us 11days and subtracting 5 times to give us 5 months
+
+
+case3(birthdate == currentdate):
+exactly the same logic as case1
+
+//birthmonth has not occured
+case1(birthdate > currentdate):
+we need to subtract from the first month till the 12-no of months after birthmonth
+e.g July 11th to July 12th(birthday) is 364 days
+we do jan+feb+mar+apr+may+jun+jul+aug+sep+oct+nov+dec, i.e (12-0 months), -364 which correctly gives 1 day 
+and 12-(12- 0 no of months) giving 0 months from July
+e.g July 11th to August 12th(birthday) is 333days
+we do jan+feb+mar+apr+may+jun+jul+aug+sep+oct+nov, i.e(12-1months), -333 which correctly gives 1 day
+and 12-(12-1 no of months) giving 1 month from July

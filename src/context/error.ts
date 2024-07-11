@@ -1,6 +1,5 @@
-export let validateDate = (date: number, month:number) =>{
-    let daysInbirthMonth = new Date(new Date().getFullYear(), month, 0).getDate() //no need to subtract cuz of 0-indexing
-    console.log(daysInbirthMonth)
+export let validateDate = (date: number, month:number, year:number) =>{ //I had to be this specific cuz of Feb lol
+    let daysInbirthMonth = new Date(year, month, 0).getDate() //no need to subtract cuz of 0-indexing
     if(date > 31){
         return false
     } else if(date > daysInbirthMonth){

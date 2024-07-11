@@ -2,10 +2,7 @@
     import Input from "../components/input.svelte";
     import Icon from "../lib/assests/icon-arrow.svg?raw";
     import { monthChecker } from '../context/date'
-    import { createEventDispatcher } from "svelte";
     import { validateDate, validateMonth, validateYear } from '../context/error'
-
-    let dispatch = createEventDispatcher()
 
     let day: Number;
     let month: Number;
@@ -34,10 +31,11 @@
 
     let calculateVariable = () =>{
         let proceed = validateVariable()
-        if(!proceed){
+        if(proceed){
             let age ={'date':day, 'month':month-1, 'year':year} //cuz of 0-indexing
             let data = monthChecker(age);
             ({calculatedYear, calculatedMonth, calculatedDays} = data)
+            console.log(data)
         }
     }
 
@@ -47,9 +45,9 @@
         if(!day || !month || !year){
             let data = {'day':!day, 'month':!month, 'year':!year}
             error = {...error, errorValue: true, errorKey:'empty', errorData:data}
-        } else if(!validateDate(day, month) || !validateMonth(month) || !validateYear(year)){
+        } else if(!validateDate(day, month, year) || !validateMonth(month) || !validateYear(year)){
             let data = {
-                'day':!validateDate(day, month),
+                'day':!validateDate(day, month, year),
                 'month':!validateMonth(month), 
                 'year':!validateYear(year)
             }
@@ -57,10 +55,17 @@
         } else{
             error = {...error, errorValue: false}
         }
-        console.log(error)
-        return error.errorValue
+        return !error.errorValue
+    }
+    let submit = (key) => {
+        if(key == 'Enter'){
+            calculateVariable()
+        }
     }
 </script>
+
+<svelte:body on:keypress={(e)=>submit(e.key)} />
+
 
 <main class='container'>
     <section class='wrapper'>
@@ -73,15 +78,15 @@
         
         <div class='bg-gray-300 my-5 h-[1px] relative'> <!--to move to tailwind-->
             <!-- A11y: <div> with click handler must have an ARIA role -->
-            <div on:keydown on:click={()=>calculateVariable()} class='cursor-pointer rounded-full inline-block p-3 bg-black absolute mt-[-30px] right-0 top-[50%]  hover:bg-purple-600'>
+            <div on:keydown on:click={()=>calculateVariable()} class='cursor-pointer rounded-full inline-block p-3 bg-purple-600 absolute mt-[-30px] right-0 top-[50%]  hover:bg-black'>
                 {@html Icon}
             </div>
         </div>
 
         <div class='section-2'>
-            <p class='font-extrabold'><span>{calculatedYear ? calculatedYear : '--'}</span> years </p>
-            <p class='font-extrabold'><span>{calculatedMonth ? calculatedMonth : '--'}</span> months</p>
-            <p class='font-extrabold'><span>{calculatedDays ? calculatedDays : '--'}</span> days</p> 
+            <p class='font-extrabold'><span>{calculatedYear || calculatedYear==0 ? calculatedYear : '--'}</span> years </p>
+            <p class='font-extrabold'><span>{calculatedMonth || calculatedMonth==0? calculatedMonth : '--'}</span> months</p>
+            <p class='font-extrabold'><span>{calculatedDays || calculatedDays==0? calculatedDays : '--'}</span> days</p> 
         </div>
     </section>
 </main>
