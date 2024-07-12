@@ -26,10 +26,3 @@ exactly the same logic as case1
 
 //birthmonth has not occured
 case1(birthdate > currentdate):
-we need to subtract from the first month till the 12-no of months after birthmonth
-e.g July 11th to July 12th(birthday) is 364 days
-we do jan+feb+mar+apr+may+jun+jul+aug+sep+oct+nov+dec, i.e (12-0 months), -364 which correctly gives 1 day 
-and 12-(12- 0 no of months) giving 0 months from July
-e.g July 11th to August 12th(birthday) is 333days
-we do jan+feb+mar+apr+may+jun+jul+aug+sep+oct+nov, i.e(12-1months), -333 which correctly gives 1 day
-and 12-(12-1 no of months) giving 1 month from July

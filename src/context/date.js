@@ -1,6 +1,6 @@
 let date = {
-    'date':20,
-    'month':6,
+    'date':13,
+    'month':0,
     'year':2006,
 }
 
@@ -27,9 +27,10 @@ const LeapRemover = (date)=>{
 
 const monthCounter = (days, birthMonth) =>{
     let monthsCount = 0
-    // console.log(birthMonth > new Date(birthMonth.getFullYear()), `${birthMonth} > ${new Date()}?`)
-    // console.log(birthMonth < new Date(birthMonth.getFullYear()), `${birthMonth} < ${new Date()}?`)
-    if(birthMonth <= new Date(birthMonth.getFullYear(), birthMonth.getMonth(), 1)){
+    let todayRelative = new Date(birthMonth.getFullYear(), new Date().getMonth(), new Date().getDate()) //today relative to birthmonths year
+    // console.log(birthMonth > todayRelative, `${birthMonth} > ${todayRelative}?`)
+    // console.log(birthMonth < todayRelative,  `${birthMonth} < ${todayRelative}?`)
+    if(birthMonth <= todayRelative){
         if(birthMonth.getDate() <= new Date().getDate()){ //when birthdate is before currentdate
             let nextMonth = new Date(birthMonth.getFullYear(), birthMonth.getMonth() + 1, 0) //starts form birthmonth
             let currMonth = nextMonth.getMonth()
@@ -56,12 +57,16 @@ const monthCounter = (days, birthMonth) =>{
                 monthsCount++
             }
         }//birthdate hasn't occured
-    } else if (new Date(birthMonth.getFullYear(), birthMonth.getMonth(), 1) < birthMonth){
+    } else if (todayRelative < birthMonth){
         if(birthMonth.getDate() > new Date().getDate()){
-            let nextMonth = new Date(birthMonth.getFullYear(), 1, 0) //start from jan
+            let nextMonth = dateConverter(new Date(birthMonth.getFullYear(), 1, 0)) //start from currentmonth
             let currMonth = nextMonth.getMonth()
-            let monthDiff = birthMonth.getMonth() - new Date().getMonth()
-            while(currMonth < (12-(monthDiff))){
+            let monthDiff = nextMonth.getMonth() - new Date().getMonth()
+            while(currMonth <= ((11-monthDiff))){ 
+                if(days <= -1){
+                    break
+                }
+
                 days-=nextMonth.getDate()
                 currMonth++
 
@@ -69,10 +74,26 @@ const monthCounter = (days, birthMonth) =>{
 
                 monthsCount++;
             }
+            monthsCount--
+            days+=31 //convert back to days
+        }else if(birthMonth.getDate() <= new Date().getDate()){
+            let currDay = dateConverter(new Date(birthMonth.getFullYear(), birthMonth.getMonth()+1, 1))
+            let nextMonth = dateConverter(new Date(currDay.getFullYear(),currDay.getMonth()+1, 0))
+            let currMonth = nextMonth.getMonth()
+            let daysOfNextMonth = nextMonth.getDate()
+            let monthDiff = birthMonth.getMonth() - new Date().getMonth()
+            while(nextMonth.getMonth() <= (12-monthDiff) || nextMonth.getMonth() >= (12-monthDiff)){
+                if(days < 31){
+                    break
+                }
+                days -= daysOfNextMonth
+                currMonth++
+                // console.log(currMonth)
+                daysOfNextMonth = new Date(currDay.getFullYear(), currMonth+1, 0).getDate()
+    
+                monthsCount++
+            }
         }
-
-        days = -days
-        monthsCount = 12-monthsCount
     }
 
     if(birthMonth.getFullYear() % 4 == 0){
@@ -101,10 +122,10 @@ export const monthChecker = (val) =>{
     const [months, days] = monthCounter(relativeDays, age)
     _date.calculatedMonth = months ? months : 0
     _date.calculatedDays = days ? days : 0
-    return _date
+    return _date//[_date, relativeDays]
 }
 
-// let answer = monthChecker(date)
+let answer = monthChecker(date)
 // console.log(new Date(date.year, date.month, date.date).toLocaleDateString(), answer[0], answer[1]+' relative days on earth')    
 for(let i=6; i < 12 ;i++){
     date.month = i
