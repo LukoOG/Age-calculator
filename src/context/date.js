@@ -127,8 +127,8 @@ export const monthChecker = (val) =>{
 
 let answer = monthChecker(date)
 // console.log(new Date(date.year, date.month, date.date).toLocaleDateString(), answer[0], answer[1]+' relative days on earth')    
-for(let i=6; i < 12 ;i++){
-    date.month = i
-    let answer = monthChecker(date)
-    console.log(new Date(2024, i, date.date).toLocaleDateString(), answer[0], answer[1]+' relative days on earth')    
-}
+// for(let i=6; i < 12 ;i++){
+//     date.month = i
+//     let answer = monthChecker(date)
+//     console.log(new Date(2024, i, date.date).toLocaleDateString(), answer[0], answer[1]+' relative days on earth')    
+// }
