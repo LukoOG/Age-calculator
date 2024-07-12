@@ -1,7 +1,7 @@
 let date = {
-    'date':13,
-    'month':0,
-    'year':2006,
+    'date':11,
+    'month':6,
+    'year':2024,
 }
 
 const dateConverter = (date) =>{
@@ -116,8 +116,10 @@ export const monthChecker = (val) =>{
 
     let _date = {}
     let noOfYears =  Math.floor(noOfDaysonEarth / 365)
+    noOfYears = noOfYears < 0 ? 0 : noOfYears
     let relativeDays = (noOfDaysonEarth - (noOfYears*365))
     _date.calculatedYear = noOfYears
+    console.log(noOfDaysonEarth, (noOfYears*365), relativeDays)
 
     const [months, days] = monthCounter(relativeDays, age)
     _date.calculatedMonth = months ? months : 0
@@ -125,7 +127,7 @@ export const monthChecker = (val) =>{
     return _date//[_date, relativeDays]
 }
 
-let answer = monthChecker(date)
+// let answer = monthChecker(date)
 // console.log(new Date(date.year, date.month, date.date).toLocaleDateString(), answer[0], answer[1]+' relative days on earth')    
 // for(let i=6; i < 12 ;i++){
 //     date.month = i

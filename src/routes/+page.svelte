@@ -45,10 +45,10 @@
         if(!day || !month || !year){
             let data = {'day':!day, 'month':!month, 'year':!year}
             error = {...error, errorValue: true, errorKey:'empty', errorData:data}
-        } else if(!validateDate(day, month, year) || !validateMonth(month) || !validateYear(year)){
+        } else if(!validateDate(day, month, year) || !validateMonth(month, year) || !validateYear(year)){
             let data = {
                 'day':!validateDate(day, month, year),
-                'month':!validateMonth(month), 
+                'month':!validateMonth(month, year), 
                 'year':!validateYear(year)
             }
             error = {...error, errorValue: true, errorKey:'invalid', errorData:data}
