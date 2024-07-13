@@ -28,8 +28,6 @@ const LeapRemover = (date)=>{
 const monthCounter = (days, birthMonth) =>{
     let monthsCount = 0
     let todayRelative = new Date(birthMonth.getFullYear(), new Date().getMonth(), new Date().getDate()) //today relative to birthmonths year
-    // console.log(birthMonth > todayRelative, `${birthMonth} > ${todayRelative}?`)
-    // console.log(birthMonth < todayRelative,  `${birthMonth} < ${todayRelative}?`)
     if(birthMonth <= todayRelative){
         if(birthMonth.getDate() <= new Date().getDate()){ //when birthdate is before currentdate
             let nextMonth = new Date(birthMonth.getFullYear(), birthMonth.getMonth() + 1, 0) //starts form birthmonth
@@ -58,8 +56,8 @@ const monthCounter = (days, birthMonth) =>{
             }
         }//birthdate hasn't occured
     } else if (todayRelative < birthMonth){
-        if(birthMonth.getDate() > new Date().getDate()){
-            let nextMonth = dateConverter(new Date(birthMonth.getFullYear(), 1, 0)) //start from currentmonth
+        if(birthMonth.getDate() >= new Date().getDate()){
+            let nextMonth = dateConverter(new Date(birthMonth.getFullYear(), 1, 0)) //start from jan
             let currMonth = nextMonth.getMonth()
             let monthDiff = nextMonth.getMonth() - new Date().getMonth()
             while(currMonth <= ((11-monthDiff))){ 
