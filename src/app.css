@@ -4,11 +4,11 @@
 
 @layer components{
     .container{
-        @apply w-screen min-h-screen mx-auto p-2 relative bg-gray-100 items-center
+        @apply w-screen min-h-screen mx-auto p-2 relative bg-gray-100 items-center flex
     }
 
     .wrapper{
-        @apply min-w-fit h-[400px] top-[50%] bg-white rounded-md shadow-xl mx-auto p-7 rounded-br-[30%];
+        @apply w-[550px] min-w-fit h-[400px] top-[50%] bg-white rounded-md shadow-xl mx-auto p-7 rounded-br-[30%];
     }
 
     /**wrapper elements**/

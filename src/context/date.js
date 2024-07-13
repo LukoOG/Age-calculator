@@ -74,7 +74,7 @@ const monthCounter = (days, birthMonth) =>{
             }
             monthsCount--
             days+=31 //convert back to days
-        }else if(birthMonth.getDate() <= new Date().getDate()){
+        }else if(birthMonth.getDate() < new Date().getDate()){
             let currDay = dateConverter(new Date(birthMonth.getFullYear(), birthMonth.getMonth()+1, 1))
             let nextMonth = dateConverter(new Date(currDay.getFullYear(),currDay.getMonth()+1, 0))
             let currMonth = nextMonth.getMonth()
